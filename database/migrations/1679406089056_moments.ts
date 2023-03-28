@@ -6,7 +6,10 @@ export default class extends BaseSchema {
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      /* E aqui vou criar também as colunas que criei à mão */
+      /* E aqui vou criar também as colunas que criei à mão em moments */
+      table.string('title')
+      table.string('description')
+      table.string('image')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
