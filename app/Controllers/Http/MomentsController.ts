@@ -4,7 +4,7 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import Moment from 'App/Models/Moment'
 
-import { Application } from '@adonisjs/core/build/standalone'
+import Application from '@ioc:Adonis/Core/Application'
 
 export default class MomentsController {
   private validationOptions = {
@@ -19,8 +19,14 @@ export default class MomentsController {
     /*ele valida a imagem antes de colocar no sistema */
     const image = request.file('image', this.validationOptions)
 
-    if(image) {
+    if (image) {
       const imageName = `${uuidv4()}.${image.extname}`
+
+      await image.move(Application.tmpPath('uploads'), {
+        name: imageName,
+      })
+
+      body.image = imageName
     }
     response.status(201)
     return {
