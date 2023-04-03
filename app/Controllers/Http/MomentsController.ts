@@ -14,8 +14,6 @@ export default class MomentsController {
   public async store({ request, response }: HttpContextContract) {
     const body = request.body()
 
-    const moment = await Moment.create(body)
-
     /*ele valida a imagem antes de colocar no sistema */
     const image = request.file('image', this.validationOptions)
 
@@ -28,6 +26,9 @@ export default class MomentsController {
 
       body.image = imageName
     }
+
+    const moment = await Moment.create(body)
+
     response.status(201)
     return {
       message: 'Momento criado com sucesso!',
